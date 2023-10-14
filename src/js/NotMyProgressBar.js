@@ -49,7 +49,10 @@ export class NotMyProgressBar {
     this.intervalId = setInterval(() => {
       this.progress += (1 / this.total) * 0.01;
       this.progressBar.animate(this.progress);
-      if (this.progress + (1 / this.total) * 0.01 === this.total) {
+      if (
+        this.progress + (1 / this.total) * 0.01 ===
+        this.progress / this.total
+      ) {
         clearInterval(this.intervalId);
       }
     }, 100);
