@@ -27,7 +27,6 @@
   },
   "rules": {
     "prettier/prettier": "error",
-    "no-console": "error",
     "import/no-extraneous-dependencies": [
       "error",
       {

@@ -28,6 +28,8 @@
     "vite-plugin-eslint": "^1.8.1"
   },
   "dependencies": {
+    "face-api.js": "^0.22.2",
+    "progressbar.js": "^1.1.1",
     "the-new-css-reset": "^1.11.0"
   }
 }
