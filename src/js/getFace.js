@@ -16,6 +16,9 @@ export async function startCatchingFace(
   ]);
 
   const video = document.getElementById('video');
+  video.setAttribute('autoplay', ''); // Safari compatibility
+  video.setAttribute('muted', ''); // Safari compatibility
+  video.setAttribute('playsinline', ''); // Safari compatibility
   const stream = await navigator.mediaDevices.getUserMedia({ video: true });
   video.srcObject = stream;
 
@@ -32,11 +35,24 @@ export async function startCatchingFace(
       let smileStartTime = null;
       let smileStopTime = null;
 
+      const detectFacesOptions = new faceapi.TinyFaceDetectorOptions({
+        inputSize: 160,
+      });
+
       const detectFaces = async () => {
         const detections = await faceapi
-          .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
+          .detectAllFaces(video, detectFacesOptions)
           .withFaceLandmarks()
           .withFaceExpressions();
+
+        if (detections.length === 0) {
+          currentProcess = 'decreasing';
+          console.log(currentProcess);
+          progressBarInstance.stop();
+          progressBarOperator.stop();
+          smileStopTime = null;
+          smileStartTime = null;
+        }
 
         detections.forEach((detection) => {
           const { expressions } = detection;
